@@ -109,8 +109,10 @@ bool StereoVision::calibrateStereoCameras(){
     //
     qDebug()<<goodSamplesCounter;
     qDebug()<<samplesCounter;
+    
+    //Undristor points 
     undistortPoints( imagePoints[0][4], imagePoints[0][4],cameraMatrix[0], distCoeffs[0],noArray(),cameraMatrix[0]);
-    undistortPoints( imagePoints[1][4], imagePoints[1][4],cameraMatrix[1], distCoeffs[1]);
+    undistortPoints( imagePoints[1][4], imagePoints[1][4],cameraMatrix[1], distCoeffs[1], noArray(), cameraMatrix[1]);
 
 
 return true;
