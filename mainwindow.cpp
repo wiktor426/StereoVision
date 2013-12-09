@@ -9,12 +9,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
     stereoVision->setPatternSize(9,6);
     Mat leftImage;
     Mat rightImage;
+    Mat leftImage2;
+    Mat rightImage2;
     //Just for check
-    QString url= "/home/haskis/Pictures/Calibration/";
-    for(int i=1; i<6;i++){
+    QString url= "/home/wiktor/Pictures/Calibration/";
+   for(int i=1; i<9;i++){
         QString left=url+"left0"+QString::number(i)+".jpg";
         QString right=url+"right0"+QString::number(i)+".jpg";
         String leftS=left.toStdString();
@@ -27,13 +30,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
         stereoVision->addSampleToCalibration(leftImage,rightImage);
     }
+
+
+
     stereoVision->setImageSize(leftImage.size());
     stereoVision->calibrateStereoCameras();
-
+    stereoVision->rectifyStereoCameras(leftImage,rightImage,leftImage2,rightImage2);
     drawChessboardCorners(leftImage,Size(9,6), stereoVision->imagePoints[0][4], true);
     drawChessboardCorners(rightImage,Size(9,6), stereoVision->imagePoints[1][4], true);
-    imshow("a",rightImage);
-    imshow("B",leftImage);
+     drawChessboardCorners(leftImage2,Size(9,6), stereoVision->imagePoints[0][4], true);
+    drawChessboardCorners(rightImage2,Size(9,6), stereoVision->imagePoints[1][4], true);
+    imshow("A",leftImage);
+    imshow("B",rightImage);
+    imshow("C",leftImage2);
+    imshow("D",rightImage2);
+
 }
 
 MainWindow::~MainWindow()
