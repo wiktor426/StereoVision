@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
     stereoVision->setPatternSize(9,6);
     Mat leftImage;
     Mat rightImage;
@@ -35,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
     drawChessboardCorners(rightImage,Size(9,6), stereoVision->imagePoints[1][4], true);
     imshow("a",rightImage);
     imshow("B",leftImage);
-
 }
 
 MainWindow::~MainWindow()

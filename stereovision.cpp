@@ -32,7 +32,7 @@ bool StereoVision::addSampleToCalibration(Mat &leftImage, Mat &rightImage){
                                        corners[1],
                                        CALIB_CB_ADAPTIVE_THRESH+CALIB_CB_NORMALIZE_IMAGE );
 
-    //We accept only samples with full visibility of corners
+    //We accept only samples with full visibility of  corners
     if(result)
         goodSamplesCounter++;
     else
@@ -91,7 +91,6 @@ bool StereoVision::calibrateStereoCameras(){
                         CALIB_RATIONAL_MODEL +
                         CALIB_FIX_K3 + CALIB_FIX_K4 + CALIB_FIX_K5);
 
-   // setIdentity(cameraMatrix[0]);
     //For check
     qDebug()<<rms;
 
@@ -106,11 +105,16 @@ bool StereoVision::calibrateStereoCameras(){
     for(int i=0;i<3;i++)
         for(int j=0;j<3;j++)
             qDebug()<<cameraMatrix[1].at<double>(i,j);
-    //
+
     qDebug()<<goodSamplesCounter;
     qDebug()<<samplesCounter;
+    //
+
+
+    //Undristorted points
     undistortPoints( imagePoints[0][4], imagePoints[0][4],cameraMatrix[0], distCoeffs[0],noArray(),cameraMatrix[0]);
-    undistortPoints( imagePoints[1][4], imagePoints[1][4],cameraMatrix[1], distCoeffs[1]);
+    undistortPoints( imagePoints[1][4], imagePoints[1][4],cameraMatrix[1], distCoeffs[1], noArray(), cameraMatrix[1]);
+
 
 
 return true;

@@ -13,6 +13,7 @@ class StereoVision
 
 public:
     StereoVision();
+    //Calibraion-----------------------------------
     bool addSampleToCalibration(Mat &leftImage, Mat &rightImage);
     bool calibrateStereoCameras();
 
@@ -22,10 +23,10 @@ public:
 
     vector<vector<Point2f> > imagePoints[2];
     vector<vector<Point3f> > objectPoints;
+    //----------------------------------------------
 private:
 
-    //Calibration Begin
-
+    //Calibration-----------------------------------
     int samplesCounter;
     int goodSamplesCounter;
     int minSamples;
@@ -33,8 +34,11 @@ private:
 
     Size patternSize; //Number of inner corners per a chessboard row and column for (8x8) board it's (7x7)
     Size imageSize;
-    Mat cameraMatrix[2], distCoeffs[2];
+    Mat cameraMatrix[2], distCoeffs[2]; //Camera
     Mat R, T, E, F;
+    //Rectification---------------------------------
+
+
 
 };
 
