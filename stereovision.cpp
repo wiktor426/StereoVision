@@ -117,14 +117,14 @@ return true;
 }
 bool StereoVision::rectifyStereoCameras(Mat &leftImage, Mat &rightImage,Mat &leftImage2, Mat &rightImage2){
     Mat rmap[2][2];
-    // from Calibration Matrixes perform Rectification
-    stereoRectify(cameraMatrix[0],distCoeffs[0],cameraMatrix[1],distCoeffs[1],imageSize,R,T,R1,R2,P1,P2,Q,CALIB_ZERO_DISPARITY,0,imageSize,0,0);
-    bool isVerticalStereo = fabs(P2.at<double>(1, 3)) > fabs(P2.at<double>(0, 3));// sprawdza wzajemne położenie kamer
-    qDebug()<< "is vertical= lol"<<isVerticalStereo;
+
+    stereoRectify(cameraMatrix[0],distCoeffs[0],cameraMatrix[1],distCoeffs[1],imageSize,R,T,R1,R2,P1,P2,Q,CALIB_ZERO_DISPARITY,0,imageSize,0,0); // from Calibration Matrixes perform Rectification
+    bool isVerticalStereo = fabs(P2.at<double>(1, 3)) > fabs(P2.at<double>(0, 3));// check cameras mutual position
+    qDebug()<< "is vertical="<<isVerticalStereo;
 
 
-    initUndistortRectifyMap(cameraMatrix[0], distCoeffs[0], R1, P1, imageSize, CV_16SC2, rmap[0][0], rmap[0][1]);//mapa 1
-    initUndistortRectifyMap(cameraMatrix[1], distCoeffs[1], R2, P2, imageSize, CV_16SC2, rmap[1][0], rmap[1][1]);
-    remap(leftImage,leftImage2,rmap[0][0],rmap[0][1],INTER_LINEAR,BORDER_TRANSPARENT,0);
-    remap(rightImage,rightImage2,rmap[1][0],rmap[1][1],INTER_LINEAR,BORDER_TRANSPARENT,0);
+    initUndistortRectifyMap(cameraMatrix[0], distCoeffs[0], R1, P1, imageSize, CV_16SC2, rmap[0][0], rmap[0][1]);// computes undistortion and rectify maps for camera #1
+    initUndistortRectifyMap(cameraMatrix[1], distCoeffs[1], R2, P2, imageSize, CV_16SC2, rmap[1][0], rmap[1][1]);// computes undistortion and rectify maps for camera #2
+    remap(leftImage,leftImage2,rmap[0][0],rmap[0][1],INTER_LINEAR,BORDER_TRANSPARENT,0);// applies undistortion and rectify maps to input image from camera #1
+    remap(rightImage,rightImage2,rmap[1][0],rmap[1][1],INTER_LINEAR,BORDER_TRANSPARENT,0);// applies undistortion and rectify maps to input image from camera #2
 }
