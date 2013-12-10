@@ -36,10 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     stereoVision->setImageSize(leftImage.size());
     stereoVision->calibrateStereoCameras();
     stereoVision->rectifyStereoCameras(leftImage,rightImage,leftImage2,rightImage2);
-    drawChessboardCorners(leftImage,Size(9,6), stereoVision->imagePoints[0][4], true);
-    drawChessboardCorners(rightImage,Size(9,6), stereoVision->imagePoints[1][4], true);
-     drawChessboardCorners(leftImage2,Size(9,6), stereoVision->imagePoints[0][4], true);
-    drawChessboardCorners(rightImage2,Size(9,6), stereoVision->imagePoints[1][4], true);
+  //  drawChessboardCorners(leftImage,Size(9,6), stereoVision->imagePoints[0][4], true);
+   // drawChessboardCorners(rightImage,Size(9,6), stereoVision->imagePoints[1][4], true);
+//     drawChessboardCorners(leftImage2,Size(9,6), stereoVision->imagePoints[0][4], true);
+  //  drawChessboardCorners(rightImage2,Size(9,6), stereoVision->imagePoints[1][4], true);
     imshow("A",leftImage);
     imshow("B",rightImage);
     imshow("C",leftImage2);

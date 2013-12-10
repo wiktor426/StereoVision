@@ -118,13 +118,11 @@ return true;
 bool StereoVision::rectifyStereoCameras(Mat &leftImage, Mat &rightImage,Mat &leftImage2, Mat &rightImage2){
     Mat rmap[2][2];
     // from Calibration Matrixes perform Rectification
-    stereoRectify(cameraMatrix[0],distCoeffs[0],cameraMatrix[1],distCoeffs[1],imageSize,R,T,R1,R2,P1,P2,Q,CALIB_ZERO_DISPARITY,-1,imageSize,0,0);
-    bool isVerticalStereo = fabs(P2.at<double>(1, 3)) > fabs(P2.at<double>(0, 3));
-    qDebug()<< "is vertical="<<isVerticalStereo;
-    if(isVerticalStereo){
-        // zmienić P1,P2
+    stereoRectify(cameraMatrix[0],distCoeffs[0],cameraMatrix[1],distCoeffs[1],imageSize,R,T,R1,R2,P1,P2,Q,CALIB_ZERO_DISPARITY,0,imageSize,0,0);
+    bool isVerticalStereo = fabs(P2.at<double>(1, 3)) > fabs(P2.at<double>(0, 3));// sprawdza wzajemne położenie kamer
+    qDebug()<< "is vertical= lol"<<isVerticalStereo;
 
-    }
+
     initUndistortRectifyMap(cameraMatrix[0], distCoeffs[0], R1, P1, imageSize, CV_16SC2, rmap[0][0], rmap[0][1]);//mapa 1
     initUndistortRectifyMap(cameraMatrix[1], distCoeffs[1], R2, P2, imageSize, CV_16SC2, rmap[1][0], rmap[1][1]);
     remap(leftImage,leftImage2,rmap[0][0],rmap[0][1],INTER_LINEAR,BORDER_TRANSPARENT,0);
