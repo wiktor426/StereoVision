@@ -15,14 +15,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    stereovision.cpp
+    stereovision.cpp \
+    parametersforsgbm.cpp
 
 HEADERS  += mainwindow.h \
-    stereovision.h
+    stereovision.h \
+    parametersforsgbm.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    parametersforsgbm.ui
+
 INCLUDEPATH += /usr/local/include/opencv
 LIBS += -L/usr/local/lib
+
 LIBS += -lopencv_core
 LIBS += -lopencv_imgproc
 LIBS += -lopencv_highgui

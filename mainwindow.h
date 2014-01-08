@@ -16,10 +16,28 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_pushButtonCalibrate_clicked();
+
+    void showParameters();
+    void on_pushButtonRectify_clicked();
+
+
+signals:
+    void calibrationDone();
+
 private:
     Ui::MainWindow *ui;
 
     StereoVision *stereoVision;
+
+    cv::Mat leftImage;
+    cv::Mat rightImage;
+
+
+    cv::Mat leftImage2;
+    cv::Mat rightImage2;
+    bool calibrationStatus;
 };
 
 #endif // MAINWINDOW_H

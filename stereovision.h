@@ -23,7 +23,8 @@ public:
 
     vector<vector<Point2f> > imagePoints[2];
     vector<vector<Point3f> > objectPoints;
-private:
+    double getCameraValueAt(int x,int y, char camera) const;  // camera='L','R' -Left,Right
+public:
 
     //Calibration Begin
 
@@ -35,8 +36,8 @@ private:
     Size patternSize; //Number of inner corners per a chessboard row and column for (8x8) board it's (7x7)
     Size imageSize;
     Mat cameraMatrix[2], distCoeffs[2];
-    Mat R, T, E, F,R1,R2,P1,P2,Q;
-
+    Mat R, T, E, F,R1,R2,P1,P2,Q,rmap[2][2];
+    StereoSGBM sgbm;
 };
 
 #endif // STEREOVISION_H
