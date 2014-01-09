@@ -6,6 +6,11 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
+
+
 using namespace cv;
 
 class StereoVision
@@ -24,6 +29,8 @@ public:
     vector<vector<Point2f> > imagePoints[2];
     vector<vector<Point3f> > objectPoints;
     double getCameraValueAt(int x,int y, char camera) const;  // camera='L','R' -Left,Right
+    void saveCalibration(std::string path);
+    void loadCalibration(std::string path);
 public:
 
     //Calibration Begin

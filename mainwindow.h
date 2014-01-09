@@ -23,6 +23,10 @@ private slots:
     void on_pushButtonRectify_clicked();
 
 
+    void on_saveButton_clicked();
+
+    void on_loadButton_clicked();
+
 signals:
     void calibrationDone();
 

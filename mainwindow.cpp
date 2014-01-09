@@ -32,11 +32,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonCalibrate_clicked()
 {
-    QString url= ui->lineEditCalibrationData->text();
+    //QString url= ui->lineEditCalibrationData->text();
+    QString url = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                    "/home/wiktor/Pictures/Calibration/",
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+
 
    for(int i=1; i<9;i++){
-        QString left=url+"left0"+QString::number(i)+".jpg";
-        QString right=url+"right0"+QString::number(i)+".jpg";
+        QString left=url+"/left0"+QString::number(i)+".jpg";
+        QString right=url+"/right0"+QString::number(i)+".jpg";
 
         String leftS=left.toStdString();
         String rightS=right.toStdString();
@@ -89,9 +94,14 @@ void MainWindow::showParameters(){
 void MainWindow::on_pushButtonRectify_clicked()
 {
     if(calibrationStatus == true){
-        String leftS=ui->lineEditLeftImage->text().toStdString();
-        String rightS= ui->lineEditRightImage->text().toStdString();
-
+        //String leftS=ui->lineEditLeftImage->text().toStdString();
+        String leftS = QFileDialog::getOpenFileName(this,
+               tr("Left image"), "/home/wiktor/Pictures/Calibration/",
+               tr("jpg Files (*.jpg)")).toStdString();
+       // String rightS= ui->lineEditRightImage->text().toStdString();
+        String rightS  = QFileDialog::getOpenFileName(this,
+               tr("Right image"), "/home/wiktor/Pictures/Calibration/",
+               tr("jpg Files (*.jpg)")).toStdString();
         leftImage = imread(leftS,CV_LOAD_IMAGE_GRAYSCALE);
         rightImage = imread(rightS,CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -111,3 +121,25 @@ void MainWindow::on_pushButtonRectify_clicked()
         qDebug()<<"Calibration is needed to proceed";
 }
 
+
+void MainWindow::on_saveButton_clicked()
+{
+   // QString saveCalibrationPath= ui->lineEditCalibrationSave->text();
+    QString saveCalibrationPath = QFileDialog::getSaveFileName(this,
+           tr("Save calibration data"), "",
+           tr("XML Files (*.xml)"));
+    std::string saveCalibrationPath2=saveCalibrationPath.toUtf8().constData();
+    stereoVision->saveCalibration(saveCalibrationPath2);
+
+}
+
+void MainWindow::on_loadButton_clicked()
+{
+    QString loadCalibrationPath = QFileDialog::getOpenFileName(this,
+           tr("Load calibration data"), "",
+           tr("XML Files (*.xml)"));
+    std::string loadCalibrationPath2=loadCalibrationPath.toUtf8().constData();
+        stereoVision->loadCalibration(loadCalibrationPath2);
+        showParameters();
+
+}

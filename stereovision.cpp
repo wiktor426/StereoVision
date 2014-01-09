@@ -147,3 +147,48 @@ double StereoVision::getCameraValueAt(int x,int y, char camera) const {
 
     return -1;
 }
+void StereoVision::saveCalibration(std::string path){
+
+  /*  QFile file(path);
+      file.open(QIODevice::WriteOnly | QIODevice::Text);
+      QTextStream out(&file);
+      for(int i=0;i<3;i++){
+          for(int j=0;j<3;j++){
+              out<<cameraMatrix[0].at<double>(i,j)<<";";
+
+          }
+          out<<"\n";
+      }
+
+
+      // optional, as QFile destructor will already do it:
+      file.close();*/
+      cv::FileStorage file2(path, FileStorage::WRITE);
+      file2<<"cameraMatrix0"<<cameraMatrix[0]<<"cameraMatrix1"<<cameraMatrix[1];
+      file2.release();
+
+}
+void StereoVision::loadCalibration(std::string path){
+
+  /*  if (path.isEmpty())
+             return;
+         else {
+
+             QFile file(path);
+
+             if (!file.open(QIODevice::ReadOnly)) {
+                 //komunikat
+                 return;
+             }
+
+          QTextStream in(&file);
+             QString line = in.readLine();
+            qDebug()<<line;
+
+}*/
+   cv::FileStorage file2(path, FileStorage::READ);
+   file2["cameraMatrix0"]>> cameraMatrix[0];
+   file2["cameraMatrix1"]>>cameraMatrix[1];
+
+
+}
